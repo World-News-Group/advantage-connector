@@ -1,0 +1,21 @@
+{
+    "name": "world-news-group/advantage-connector",
+    "description": "Interfaces to alternative API.  Not publicly available.",
+    "type": "library",
+    "require-dev": {
+        "phpstan/phpstan": "^1.10"
+    },
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "WorldNewsGroup\\AdvantageConnector\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ben Menking",
+            "email": "bmenking@wng.org"
+        }
+    ],
+    "require": {}
+}
