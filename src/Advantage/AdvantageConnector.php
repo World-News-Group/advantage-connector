@@ -60,9 +60,9 @@ class AdvantageConnector {
      * @param String $method - defaults to 'GET'
      * @param Array $params - defaults to an empty array
      * 
-     * @return String|\Exception
+     * @return Array|\Exception
      */
-    protected static function internalAdvantageCall(String $request, String $method = "GET", Array $params = []): String|\Exception {
+    protected static function internalAdvantageCall(String $request, String $method = "GET", Array $params = []): Array|\Exception {
         if( empty(self::$credentials) || empty(self::$endpoint) ) {
             throw new \Exception('Please run AdvantageConnector::configure() first before attempting to make calls.');
         }
