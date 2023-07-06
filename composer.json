@@ -8,7 +8,7 @@
     "license": "proprietary",
     "autoload": {
         "psr-4": {
-            "WorldNewsGroup\\AdvantageConnector\\": "src/"
+            "WorldNewsGroup\\": "src/"
         }
     },
     "authors": [
