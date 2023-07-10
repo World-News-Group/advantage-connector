@@ -43,3 +43,12 @@ AdvantageConnector::getCustomer('999999999');
 
 All results are returned as SQL queries, so column names often won't match up with the "official" Advantage API.
 
+## Development/Testing
+
+Each read-only method has a test built for regression testing.
+
+`./vendor/bin/phpunit ./tests`
+
+We like (should) to meet phpstan level 3 compatibility
+
+`./vendor/bin/phpstan analyze ./src -l 3`

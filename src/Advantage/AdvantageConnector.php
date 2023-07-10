@@ -2,6 +2,8 @@
 
 namespace WorldNewsGroup\Advantage;
 
+use GuzzleHttp\Client;
+
 class AdvantageConnector {
     private static $credentials;
     private static $endpoint;
@@ -41,7 +43,7 @@ class AdvantageConnector {
     }
 
     public static function getSubscriptionsForCustomer($customer_number, $publication_code = 'WNG') {
-        return self::internalAdvantageCall('advantage/subscription/' . $publication_code . '/' . $customer_number);
+        return self::internalAdvantageCall('/advantage/subscription/' . $publication_code . '/' . $customer_number);
     }
 
     public static function changeAddressCode($customer_number, $address_code) {
@@ -50,7 +52,7 @@ class AdvantageConnector {
             'CustomerNumber'=>$customer_number
         ];
 
-        return self::internalAdvantageCall('advantage/subscription/adjust-bill-to', "POST", $params);
+        return self::internalAdvantageCall('/advantage/subscription/adjust-bill-to', "POST", $params);
     }
 
     /**
@@ -67,22 +69,15 @@ class AdvantageConnector {
             throw new \Exception('Please run AdvantageConnector::configure() first before attempting to make calls.');
         }
 
-        $ch = curl_init();
+        $http = new Client();
 
-        $headers = ['X-Api-Key: ' . self::$credentials];
-        curl_setopt($ch, CURLOPT_URL, self::$endpoint . $request);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = $http->request($method, self::$endpoint . $request, [
+            'headers'=>[
+                'X-Api-Key'=>self::$credentials
+            ],
+            \GuzzleHttp\RequestOptions::JSON=>$params
+        ]);
 
-        if( strtoupper($method) == 'POST' ) {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-        }
-
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        return json_decode($result, true);
+        return json_decode($result->getBody(), true);
     }
 }

@@ -3,7 +3,9 @@
     "description": "Interfaces to alternative API.  Not publicly available.",
     "type": "library",
     "require-dev": {
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.2",
+        "vlucas/phpdotenv": "^5.5"
     },
     "license": "proprietary",
     "autoload": {
@@ -17,5 +19,7 @@
             "email": "bmenking@wng.org"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.7"
+    }
 }
