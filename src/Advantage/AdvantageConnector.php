@@ -29,6 +29,13 @@ class AdvantageConnector {
         return self::internalAdvantageCall('/advantage/customer/' . $customer_number);
     }
 
+    public static function getCustomers($offset = 0, $count = 50, $order_by_direction = "ASC", $order_by_field = null) {
+        $query = ['order_direction'=>$order_by_direction];
+        if( !is_null($order_by_field) ) $query['order_by'] = $order_by_field;
+        
+        return self::internalAdvantageCall('/advantage/customers/' . $offset . '/' . $count . '?' . http_build_query($query));
+    }
+
     public static function getCustomerPassword(String $customer_number) {
         return self::internalAdvantageCall('/advantage/user/' . $customer_number);
     }
