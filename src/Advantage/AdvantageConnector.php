@@ -32,7 +32,7 @@ class AdvantageConnector {
     public static function getCustomers($offset = 0, $count = 50, $order_by_direction = "ASC", $order_by_field = null) {
         $query = ['order_direction'=>$order_by_direction];
         if( !is_null($order_by_field) ) $query['order_by'] = $order_by_field;
-        
+
         return self::internalAdvantageCall('/advantage/customers/' . $offset . '/' . $count . '?' . http_build_query($query));
     }
 
@@ -85,6 +85,13 @@ class AdvantageConnector {
             \GuzzleHttp\RequestOptions::JSON=>$params
         ]);
 
-        return json_decode($result->getBody(), true);
+        $arr = json_decode((string)$result->getBody(), true);
+
+        if( $arr === null ) {
+            return [];
+        }
+        else {
+            return $arr;
+        }
     }
 }
