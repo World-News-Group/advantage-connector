@@ -34,7 +34,7 @@ final class AdvantageConnectorTest extends TestCase {
 
         $this->assertIsArray($result);
         $this->assertSame($result['CTM_NBR'], $_ENV['TEST_CUSTOMER']);
-        $this->assertArrayHasKey('CVI_NUM', $result);
+        $this->assertArrayHasKey('CVI_NBR', $result);
         $this->assertArrayHasKey('PASS_WD', $result);
     }
 
@@ -48,7 +48,8 @@ final class AdvantageConnectorTest extends TestCase {
     public function testGetCustomerByEmail() {
         $result = AdvantageConnector::getCustomerPassword($_ENV['TEST_CUSTOMER']);
 
-        $byEmail = AdvantageConnector::getCustomerByEmail($result['AUTH_VAL']);
+        //$byEmail = AdvantageConnector::getCustomerByEmail($result['AUTH_VAL']);
+        $byEmail = AdvantageConnector::getUserByEmail($result['AUTH_VAL']);
 
         $this->assertSame($result, $byEmail);
     }
@@ -56,6 +57,29 @@ final class AdvantageConnectorTest extends TestCase {
     public function testGetSubscriptionsForCustomer() {
         $result = AdvantageConnector::getSubscriptionsForCustomer($_ENV['TEST_CUSTOMER']);
 
+        $this->assertEquals(count($result['items']), $result['returned']);
         $this->assertIsArray($result);
     }
+
+    public function testGetUser() {
+        $result = AdvantageConnector::getUser($_ENV['TEST_CUSTOMER']);
+
+        $this->assertIsArray($result);
+        $this->assertEquals($_ENV['TEST_CUSTOMER'], $result['CTM_NBR']);
+    }
+
+    public function testGetUsers() {
+        $result = AdvantageConnector::getUsers();
+
+        $this->assertIsArray($result);
+        $this->assertEquals(count($result['items']), $result['returned']);
+
+        $result = AdvantageConnector::getUsers(0, 0);
+
+        $this->assertIsArray($result);
+        $this->assertEquals(count($result['items']), $result['returned']);
+        $this->assertEquals(0, $result['returned']);
+
+    }
+
 }
