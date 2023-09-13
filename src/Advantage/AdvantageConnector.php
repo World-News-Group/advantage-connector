@@ -127,6 +127,13 @@ class AdvantageConnector {
     }
 
     /**
+     * Get a coupon
+     */
+    public static function couponGet($name) {
+        return self::internalAdvantageCall('/advantage/coupon/' . $name);
+    }
+
+    /**
      * Performs the internal call to the API layer
      * 
      * @param String $request
